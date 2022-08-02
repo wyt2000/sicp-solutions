@@ -34,8 +34,8 @@
   (if (and (<= (lower-bound y) 0) (>= (upper-bound y) 0))
       (error "Interval across 0: " y)
       (mul-interval x
-		    (make-interval (/ 1.0 lower-bound y)
-				   (/ 1.0 upper-bound y)))))
+		    (make-interval (/ 1.0 (lower-bound y))
+				   (/ 1.0 (upper-bound y))))))
 
 (define x (make-interval -3 4))
 (define y (make-interval -5 2))
