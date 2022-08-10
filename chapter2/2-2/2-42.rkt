@@ -38,29 +38,25 @@
           (queen-cols (- k 1))))))
   (queen-cols board-size))
 
-;we use row position from 8th col to 1st col: (list (list (1 8) (4 7) (5 6) (3 5) (2 4)...) (list...)) as positions
-
-
-(define empty-board (list nil))
+(define empty-board nil)
 
 (define (adjoin-position new-row k rest-of-queens)
-  (map (lambda (queen-list)
-	 (if (null? queen-list)
-	     (cons new-row k)
-	     (cons (cons new-row k) queen-list)))
-       rest-of-queens))
-
-(adjoin-position 1 1 nil)
+  (if (null? rest-of-queens)
+      (list (list (list new-row k)))
+      (map (lambda (queen-list)
+	    (cons (list new-row k) queen-list))
+           rest-of-queens)))
 
 (define (sat-list? sat? items)
   (accumulate (lambda (x y) (and x y)) #t (map sat? items)))
 
 (define (safe? k positions)
-  (define kth-queen (car positions))
+  (define kth-queen (caar positions))
   (sat-list? (lambda (other-queen)
-	       (and (not (= (car kth-queen) (car other-queen)))
-		    (not (= (cdr kth-queen) (cdr other-queen)))
-		    (not (= (abs (- (car kth-queen) (car other-queen))) (abs (- (cdr kth-queen) (cdr other-queen)))))))
-	     (cdr positions)))
+	         (and (not (= (car kth-queen) (car other-queen)))
+		      (not (= (cadr kth-queen) (cadr other-queen)))
+		      (not (= (abs (- (car kth-queen) (car other-queen))) (abs (- (cadr kth-queen) (cadr other-queen)))))))
+	     (cdar positions)))
 
 (queens 8)
+(length (queens 8))
