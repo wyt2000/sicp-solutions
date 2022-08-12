@@ -30,16 +30,16 @@
 
 (define (base e) (cadr e))
 
-(define (power e) (caddr e))
-  (if (= (length (cddr s)) 1)
-      (caddr s)
-      (cons '** (cddr s))))
+(define (power e)
+  (if (= (length (cddr e)) 1)
+      (caddr e)
+      (cons '** (cddr e))))
 
 (define (sum? x) (and (pair? x) (eq? (car x) '+)))
 
 (define (addend s) (cadr s))
 
-(define (augend s) (caddr s)
+(define (augend s)
   (if (= (length (cddr s)) 1)
       (caddr s)
       (cons '+ (cddr s))))

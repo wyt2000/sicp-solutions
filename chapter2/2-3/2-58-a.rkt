@@ -36,19 +36,13 @@
 
 (define (addend s) (car s))
 
-(define (augend s) (caddr s)
-  (if (= (length (cddr s)) 1)
-      (caddr s)
-      (cons '+ (cddr s))))
+(define (augend s) (caddr s))
 
-(define (product? x) (and (pair? x) (eq? (car x) '*)))
+(define (product? x) (and (pair? x) (eq? (cadr x) '*)))
 
-(define (multiplier p) (cadr p))
+(define (multiplier p) (car p))
 
-(define (multiplicand p)
-  (if (= (length (cddr p)) 1)
-      (caddr p)
-      (cons '* (cddr p))))
+(define (multiplicand p) (caddr p))
 
 (define (deriv exp var)
   (cond ((number? exp) 0)
@@ -67,5 +61,4 @@
 
 	(else (error "unknown expression" exp))))
 
-(deriv '(* 3 x x x) 'x) 
-(deriv '(+ x x (* x x)) 'x) 
+(deriv '(x + (3 * (x * x))) 'x) 
