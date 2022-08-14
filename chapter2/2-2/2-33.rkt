@@ -1,19 +1,18 @@
 #lang sicp
 
-(define (accumulate p zero seq)
-  (define (iter seq result)
-          (if (null? seq)
-	      result
-	      (iter (cdr seq) (p (car seq) result))))
-  (iter seq zero))
+(define (accumulate op initial sequence) 
+   (if (null? sequence) 
+       initial 
+       (op (car sequence) 
+           (accumulate op initial (cdr sequence))))) 
 
 (define (append seq1 seq2)
-  (accumulate cons seq2 (reverse seq1)))
+  (accumulate cons seq2 seq1))
 
 (append (list 1 2 3) (list 4 5 6))
 
 (define (map p sequence)
-  (accumulate (lambda (x y) (append y (list (p x)))) nil sequence))
+  (accumulate (lambda (x y) (cons (p x) y)) nil sequence))
 
 (map (lambda (x) (+ x 1)) (list 1 2 3 4 5))
 
@@ -21,3 +20,6 @@
   (accumulate (lambda (x y) (+ y 1)) 0 sequence))
 
 (length (list 1 2 3 4 5))
+
+;The result depends on the direction of accumulation:
+;If we use iteration, it will accumlate from left to right.
